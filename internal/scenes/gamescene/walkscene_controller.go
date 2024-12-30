@@ -31,8 +31,8 @@ func (c *Controller) Init(s *gscene.RootScene[*Controller]) {
 
 	c.state = &sceneState{frameDelay: 48}
 	sn := newSnakeNode(gmath.Vec{
-		X: math.Round(c.ctx.Rand.FloatRange(0, float64(c.ctx.WindowWidth))/48) * 48,
-		Y: math.Round(c.ctx.Rand.FloatRange(0, float64(c.ctx.WindowHeight))/48) * 48,
+		X: math.Round(c.ctx.Rand.FloatRange(subImageSize, float64(c.ctx.WindowWidth-subImageSize))/subImageSize) * subImageSize,
+		Y: math.Round(c.ctx.Rand.FloatRange(subImageSize, float64(c.ctx.WindowHeight-subImageSize))/subImageSize) * subImageSize,
 	}, c.state)
 	c.state.headItem = sn
 	c.state.AddSnakeNode(sn)
@@ -43,8 +43,8 @@ func (c *Controller) Init(s *gscene.RootScene[*Controller]) {
 
 func (c *Controller) createPickup() {
 	p := newPickupNode(gmath.Vec{
-		X: math.Round(c.ctx.Rand.FloatRange(0, float64(c.ctx.WindowWidth))/48) * 48,
-		Y: math.Round(c.ctx.Rand.FloatRange(0, float64(c.ctx.WindowHeight))/48) * 48,
+		X: math.Round(c.ctx.Rand.FloatRange(subImageSize, float64(c.ctx.WindowWidth-subImageSize))/subImageSize) * subImageSize,
+		Y: math.Round(c.ctx.Rand.FloatRange(subImageSize, float64(c.ctx.WindowHeight-subImageSize))/subImageSize) * subImageSize,
 	})
 	p.EventDestroyed.Connect(nil, func(score int) {
 		c.createPickup()

@@ -32,7 +32,7 @@ const (
 const subImageSize = 48
 
 func newSnakeNode(pos gmath.Vec, state *sceneState) *SnakeNode {
-	return &SnakeNode{pos: pos, orientation: up, isHead: true, state: state, nextNode: nil, count: 0}
+	return &SnakeNode{pos: pos, orientation: up, isHead: true, state: state, nextNode: nil, count: 0, nextOrientation: 0}
 }
 
 func newTailSnakeNode(pos gmath.Vec, orientation int, c *Controller) *SnakeNode {
@@ -47,7 +47,7 @@ func newTailSnakeNode(pos gmath.Vec, orientation int, c *Controller) *SnakeNode 
 		newPos = gmath.Vec{X: pos.X - subImageSize, Y: pos.Y}
 	}
 
-	return &SnakeNode{pos: newPos, orientation: orientation, isHead: false, nextNode: c.state.tailItem}
+	return &SnakeNode{pos: newPos, orientation: orientation, isHead: false, nextNode: c.state.tailItem, nextOrientation: 0}
 }
 
 func (sn *SnakeNode) Init(s *scene) {
@@ -79,16 +79,16 @@ func (sn *SnakeNode) Update(delta float64) {
 		offset := sn.move()
 		sn.pos = sn.pos.Add(offset)
 
-		if sn.pos.X <= 0 {
-			sn.pos.X = float64(sn.windowXMax)
-		} else if sn.pos.X > float64(sn.windowXMax) {
-			sn.pos.X = 0
+		if sn.pos.X < subImageSize {
+			sn.pos.X = float64(sn.windowXMax - subImageSize)
+		} else if sn.pos.X > float64(sn.windowXMax-subImageSize) {
+			sn.pos.X = subImageSize
 		}
 
-		if sn.pos.Y < 0 {
-			sn.pos.Y = float64(sn.windowYMax)
-		} else if sn.pos.Y > float64(sn.windowYMax) {
-			sn.pos.Y = 0
+		if sn.pos.Y < subImageSize {
+			sn.pos.Y = float64(sn.windowYMax - subImageSize)
+		} else if sn.pos.Y > float64(sn.windowYMax-subImageSize) {
+			sn.pos.Y = subImageSize
 		}
 		sn.nextOrientation = 0
 	} else {
