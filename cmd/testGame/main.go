@@ -16,8 +16,8 @@ import (
 func main() {
 	ctx := game.NewContext()
 	ctx.Loader = createLoader()
-	ctx.WindowWidth = 640
-	ctx.WindowHeight = 640
+	ctx.WindowWidth = 480
+	ctx.WindowHeight = 480
 	ctx.Rand.SetSeed(time.Now().Unix())
 	g := &game.Game{
 		Ctx: ctx,
